@@ -1,0 +1,18 @@
+{
+  "name": "hs-todo",
+  "version": "0.0.0",
+  "description": "Pretty todo application in the CLI.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "todo"
+  ],
+  "author": "HyunSeob <sytte1017@gmail.com> (http://hyunseob.github.io)",
+  "license": "MIT",
+  "dependencies": {
+    "chalk": "^1.1.3",
+    "moment": "^2.12.0"
+  }
+}
