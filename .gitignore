@@ -1,4 +1,3 @@
-
 # Logs
 logs
 *.log
@@ -36,5 +35,3 @@ jspm_packages
 
 # Custom ignore
 db.json
-
-
