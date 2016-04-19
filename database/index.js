@@ -31,17 +31,19 @@ var db = {
   }
 };
 
-db.load()
-.then(function() {
-  db.Todo.create('This is first todo.');
-  db.Todo.create('This is second todo.');
-  db.Category.create('This is first category.');
-  var todo = db.Todo.find(1);
-  todo.description = 'This is fake todo.';
-  db.Todo.update(1, todo);
-  db.Category.create('This is real first category.');
-  return db.save();
-})
-.then(function() {
-  console.log('done');
-});
+// db.load()
+// .then(function() {
+//   db.Todo.create('This is first todo.');
+//   db.Todo.create('This is second todo.');
+//   db.Category.create('This is first category.');
+//   var todo = db.Todo.find(1);
+//   todo.description = 'This is fake todo.';
+//   db.Todo.update(1, todo);
+//   db.Category.create('This is real first category.');
+//   return db.save();
+// })
+// .then(function() {
+//   console.log('done');
+// });
+
+exports = module.exports = db;
