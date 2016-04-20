@@ -12,7 +12,7 @@ program.command('list')
 .action(function() {
   db.load()
   .then(function() {
-    console.log(db.Todo);
+    console.log(db.Todo.findAll());
     db.save();
   });
 });

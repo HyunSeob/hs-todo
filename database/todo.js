@@ -36,7 +36,33 @@ TodoList.prototype.create = function(description, category) {
   return todo;
 };
 
-TodoList.prototype.find = function(id) {
+TodoList.prototype.findAll = function(obj) {
+  return _.filter(this.list, function(todo) {
+    for (var key in obj) {
+      if (todo.hasOwnProperty(key)) {
+        if (todo[key] !== obj[key]) return false;
+      } else {
+        throw new Error('Property is not defined.');
+      }
+    }
+    return true;
+  });
+};
+
+TodoList.prototype.findOne = function(obj) {
+  return _.find(this.list, function(todo) {
+    for (var key in obj) {
+      if (todo.hasOwnProperty(key)) {
+        if (todo[key] !== obj[key]) return false;
+      } else {
+        throw new Error('Property is not defined.');
+      }
+    }
+    return true;
+  });
+};
+
+TodoList.prototype.findById = function(id) {
   return _.find(this.list, function(todo) {
     return todo.id === id;
   });
