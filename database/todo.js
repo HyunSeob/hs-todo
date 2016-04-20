@@ -9,11 +9,13 @@ function Todo(obj) {
   this.description = obj.description;
   this.category = obj.category;
   this.createdAt = obj.createdAt || moment();
+  this.isComplete = obj.isComplete || false;
 }
 
-Todo.prototype.update = function(todo) {
-  this.description = todo.description;
-  this.category = todo.category;
+Todo.prototype.update = function(obj) {
+  this.description = obj.description;
+  this.category = obj.category;
+  this.isComplete = obj.isComplete;
   return this;
 };
 
