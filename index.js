@@ -1,5 +1,8 @@
-#!/usr/bin/env node
+#!/usr/bin/env node --harmony
+
 var program = require('commander');
+var co      = require('co');
+var prompt  = require('co-prompt');
 var db      = require('./database');
 
 program.version('0.0.0');
@@ -14,15 +17,21 @@ program.command('list')
   });
 });
 
-program.command('new [description]')
+program.command('new')
 .description('add a new todo')
-.action(function(description) {
-  // console.log('You enter the new!');
-  // console.log(description);
+.action(function() {
   db.load()
   .then(function() {
-    db.Todo.create(description);
-    db.save();
+    return co(function* (){
+      var description = yield prompt('description: ');
+      var category = yield prompt('category: (uncategorized) ');
+      db.Todo.create(description, category);
+      return db.save();
+    });
+  })
+  .then(function() {
+    console.log('New todo saved.');
+    process.exit(1);
   });
 });
 

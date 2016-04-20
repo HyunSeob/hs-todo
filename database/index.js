@@ -1,21 +1,22 @@
 var fs      = require('fs');
 var _       = require('lodash');
 var Promise = require('bluebird');
+var path    = require('path');
 
 var Todo     = require('./todo');
 var Category = require('./category');
 
+var FILE_PATH = path.resolve(__dirname, 'db.json');
+
 var db = {
-  Todo: new Todo(),
-  Category: new Category(),
+  Todo: {},
   load: function() {
     var that = this;
     return new Promise(function(resolve, reject) {
-      fs.readFile('db.json', function(err, data) {
+      fs.readFile(FILE_PATH, 'utf-8', function(err, data) {
         if (data) data = JSON.parse(data);
         data = data || {};
         that.Todo = new Todo(data.Todo);
-        that.Category = new Category(data.Category);
         resolve(that);
       });
     });
@@ -24,26 +25,12 @@ var db = {
     var that = this;
     var json = JSON.stringify(this);
     return new Promise(function(resolve, reject) {
-      fs.writeFile('db.json', json, function() {
+      fs.writeFile(FILE_PATH, json, function(err, res) {
+        if (err) throw err;
         resolve(that);
       });
     });
   }
 };
-
-// db.load()
-// .then(function() {
-//   db.Todo.create('This is first todo.');
-//   db.Todo.create('This is second todo.');
-//   db.Category.create('This is first category.');
-//   var todo = db.Todo.find(1);
-//   todo.description = 'This is fake todo.';
-//   db.Todo.update(1, todo);
-//   db.Category.create('This is real first category.');
-//   return db.save();
-// })
-// .then(function() {
-//   console.log('done');
-// });
 
 exports = module.exports = db;

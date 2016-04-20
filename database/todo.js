@@ -7,6 +7,7 @@ function Todo(obj) {
 
   this.id = obj.id;
   this.description = obj.description;
+  this.category = obj.category;
   this.createdAt = obj.createdAt || moment();
 }
 
@@ -25,10 +26,11 @@ function TodoList(instance) {
   }.bind(this));
 }
 
-TodoList.prototype.create = function(description) {
+TodoList.prototype.create = function(description, category) {
   var todo = new Todo({
     id: this.lastId++,
-    description: description
+    description: description,
+    category: category || 'uncategorized'
   });
   this.list.push(todo);
   return todo;
