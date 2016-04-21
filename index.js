@@ -25,7 +25,10 @@ program.command('new')
     return co(function* (){
       var description = yield prompt('description: ');
       var category = yield prompt('category: (uncategorized) ');
-      db.Todo.create(description, category);
+      db.Todo.create({
+        description: description,
+        category: category
+      });
       return db.save();
     });
   })
