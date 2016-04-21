@@ -7,7 +7,7 @@ function Todo(obj) {
 
   this.id = obj.id;
   this.description = obj.description;
-  this.category = obj.category;
+  this.category = obj.category || 'uncategorized';
   this.createdAt = obj.createdAt || moment();
   this.isComplete = obj.isComplete || false;
 }
@@ -28,12 +28,9 @@ function TodoList(instance) {
   }.bind(this));
 }
 
-TodoList.prototype.create = function(description, category) {
-  var todo = new Todo({
-    id: this.lastId++,
-    description: description,
-    category: category || 'uncategorized'
-  });
+TodoList.prototype.create = function(obj) {
+  obj.id = this.lastId++;
+  var todo = new Todo(obj);
   this.list.push(todo);
   return todo;
 };
