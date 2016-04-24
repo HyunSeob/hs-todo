@@ -13,9 +13,9 @@ function Todo(obj) {
 }
 
 Todo.prototype.update = function(obj) {
-  this.description = obj.description;
-  this.category = obj.category;
-  this.isComplete = obj.isComplete;
+  this.description = obj.description || this.description;
+  this.category = obj.category || this.category;
+  this.isComplete = obj.isComplete || this.isComplete;
   return this;
 };
 
@@ -63,19 +63,19 @@ TodoList.prototype.findOne = function(obj) {
 
 TodoList.prototype.findById = function(id) {
   return _.find(this.list, function(todo) {
-    return todo.id === id;
+    return todo.id == id;
   });
 };
 
-TodoList.prototype.update = function(id, newTodo) {
-  var old = this.find(id);
+TodoList.prototype.update = function(newTodo) {
+  var old = this.findById(newTodo.id);
   if (!old) throw new Error('Instance doesn\'t exist.');
   return old.update(newTodo);
 };
 
 TodoList.prototype.delete = function(id) {
   var index = _.findIndex(this.list, function(todo) {
-    return todo.id === id;
+    return todo.id == id;
   });
 
   if (index === -1) throw new Error('Instance doesn\'t exist.');
