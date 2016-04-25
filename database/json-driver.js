@@ -1,14 +1,14 @@
 'use strict';
 
 // Node.js native modules.
-const fs     = import 'fs';
+const fs     = require('fs');
 
 // External dependencies.
-const moment = import 'moment';
-const _      = import 'lodash';
+const moment = require('moment');
+const _      = require('lodash');
 
 // Custom modules.
-const Todo   = import './todo';
+const Todo   = require('./todo');
 
 class JsonDriver {
   constructor(filepath) {
@@ -43,4 +43,4 @@ class JsonDriver {
   }
 };
 
-export default JsonDriver;
+exports.module = exports = JsonDriver;
