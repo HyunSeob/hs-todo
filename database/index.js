@@ -4,7 +4,6 @@ var Promise = require('bluebird');
 var path    = require('path');
 
 var Todo     = require('./todo');
-var Category = require('./category');
 
 var FILE_PATH = path.resolve(__dirname, 'db.json');
 
