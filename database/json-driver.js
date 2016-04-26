@@ -1,21 +1,14 @@
 'use strict';
 
 // Node.js native modules.
-const fs     = require('fs');
-
-// External dependencies.
-const moment = require('moment');
-const _      = require('lodash');
-
-// Custom modules.
-const Todo   = require('./todo');
+const fs = require('fs');
 
 class JsonDriver {
   constructor(filepath) {
     this.filepath = filepath;
   }
 
-  load() {
+  read() {
     return new Promise((resolve, reject) => {
       fs.readFile(this.filepath, 'utf-8', (err, data) => {
         if (err) {
@@ -29,9 +22,9 @@ class JsonDriver {
     });
   }
 
-  save() {
+  write(data) {
     return new Promise((resolve, reject) => {
-      const json = JSON.stringify(this);
+      const json = JSON.stringify(data);
       fs.writeFile(this.filepath, json, (err) => {
         if (err) {
           reject(err);
@@ -43,4 +36,4 @@ class JsonDriver {
   }
 };
 
-exports.module = exports = JsonDriver;
+module.exports = exports = JsonDriver;

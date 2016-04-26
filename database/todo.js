@@ -82,4 +82,4 @@ TodoList.prototype.delete = function(id) {
   this.list.splice(index, 1);
 };
 
-module.exports = TodoList;
+module.exports = Todo;

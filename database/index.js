@@ -1,35 +1,38 @@
-var fs      = require('fs');
-var _       = require('lodash');
-var Promise = require('bluebird');
-var path    = require('path');
+'use strict';
 
-var Todo     = require('./todo');
+// Node.js native modules.
+const path    = require('path');
 
-var FILE_PATH = path.resolve(__dirname, 'db.json');
+// External dependencies.
+const _       = require('lodash');
+const Promise = require('bluebird');
 
-var db = {
-  Todo: {},
-  load: function() {
-    var that = this;
-    return new Promise(function(resolve, reject) {
-      fs.readFile(FILE_PATH, 'utf-8', function(err, data) {
-        if (data) data = JSON.parse(data);
-        data = data || {};
-        that.Todo = new Todo(data.Todo);
-        resolve(that);
-      });
+// Custom modules.
+const Todo       = require('./todo');
+const TodoDriver = require('./todo-driver');
+
+// Constants.
+const FILE_PATH = path.resolve(__dirname, 'db.json');
+
+const driver = new TodoDriver(FILE_PATH);
+
+exports = module.exports;
+
+exports.create = (obj) => {
+  return new Promise((resolve, reject) => {
+    let result = null;
+    driver.read()
+    .then((data) => {
+      obj.id = ++data.lastId;
+      result = new Todo(obj);
+      data.list.push(result);
+      return driver.write(data);
+    })
+    .then(() => {
+      resolve(result);
+    })
+    .catch((err) => {
+      reject(err);
     });
-  },
-  save: function() {
-    var that = this;
-    var json = JSON.stringify(this);
-    return new Promise(function(resolve, reject) {
-      fs.writeFile(FILE_PATH, json, function(err, res) {
-        if (err) throw err;
-        resolve(that);
-      });
-    });
-  }
+  });
 };
-
-exports = module.exports = db;
