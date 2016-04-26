@@ -15,6 +15,7 @@ const DEFAULT_PATH = path.resolve(__dirname, 'db.json');
 
 class TodoDriver {
   constructor(filepath) {
+    filepath = filepath || DEFAULT_PATH;
     this.json = new JsonDriver(filepath);
   }
 

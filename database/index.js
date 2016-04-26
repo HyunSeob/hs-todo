@@ -36,3 +36,24 @@ exports.create = (obj) => {
     });
   });
 };
+
+exports.findAll = (obj) => {
+  return new Promise((resolve, reject) => {
+    driver.read()
+    .then((data) => {
+      const filtered = data.list.filter((todo) => {
+        let key, result = true;
+        for (key in obj) {
+          if (todo.hasOwnProperty(key) && obj[key] !== todo[key]) {
+            result = false;
+          }
+        }
+        return result;
+      });
+      resolve(filtered);
+    })
+    .catch((err) => {
+      reject(err);
+    });
+  });
+}
