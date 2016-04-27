@@ -1,7 +1,6 @@
 'use strict';
 
-var moment = require('moment');
-var _      = require('lodash');
+const moment = require('moment');
 
 const PROPS = {
   id: {
@@ -78,4 +77,4 @@ Todo.prototype.update = function(obj) {
   return this;
 };
 
-module.exports = Todo;
+exports = module.exports = Todo;
