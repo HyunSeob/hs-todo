@@ -69,9 +69,12 @@ Todo.hasUnknownProperty = (obj) => {
 };
 
 Todo.prototype.update = function(obj) {
-  this.description = obj.description || this.description;
-  this.category = obj.category || this.category;
-  this.isComplete = obj.isComplete || this.isComplete;
+  let key;
+  for (key in obj) {
+    if (PROPS.hasOwnProperty(key)) {
+      this[key] = obj[key];
+    }
+  }
   return this;
 };
 

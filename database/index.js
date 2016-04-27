@@ -5,7 +5,6 @@ const path    = require('path');
 
 // External dependencies.
 const _       = require('lodash');
-const Promise = require('bluebird');
 
 // Custom modules.
 const Todo       = require('./todo');
@@ -56,4 +55,83 @@ exports.findAll = (obj) => {
       reject(err);
     });
   });
-}
+};
+
+exports.findOne = (obj) => {
+  return new Promise((resolve, reject) => {
+    driver.read()
+    .then((data) => {
+      const found = data.list.find((todo) => {
+        let key, result = true;
+        for (key in obj) {
+          if (todo.hasOwnProperty(key) && obj[key] !== todo[key]) {
+            result = false;
+          }
+        }
+        return result;
+      });
+      resolve(found);
+    })
+    .catch((err) => {
+      reject(err);
+    });
+  });
+};
+
+exports.findById = (id) => {
+  return new Promise((resolve, reject) => {
+    driver.read()
+    .then((data) => {
+      const found = data.list.find((todo) => todo.id === id);
+      resolve(found);
+    })
+    .catch((err) => {
+      reject(err);
+    });
+  });
+};
+
+exports.update = (obj) => {
+  if (!obj.id) throw new Error('\'update\' requires id.');
+
+  return new Promise((resolve, reject) => {
+    let found;
+    driver.read()
+    .then((data) => {
+      found = data.list.find((todo) => todo.id === obj.id);
+      if (!found) {
+        throw new Error('Object does not exist.');
+      }
+      found.update(obj);
+      return driver.write(data);
+    })
+    .then(() => {
+      resolve(found);
+    })
+    .catch((err) => {
+      reject(err);
+    });
+  });
+};
+
+exports.destroy = (id) => {
+  if (!id) throw new Error('\'destory\' requires id.');
+
+  return new Promise((resolve, reject) => {
+    driver.read()
+    .then((data) => {
+      const index = data.list.findIndex((todo) => todo.id === id);
+      if (index === -1) {
+        throw new Error('Object does not exist.');
+      }
+      data.list.splice(index, 1);
+      return driver.write(data);
+    })
+    .then(() => {
+      resolve(true);
+    })
+    .catch((err) => {
+      reject(err);
+    });
+  });
+};
