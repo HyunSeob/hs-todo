@@ -3,9 +3,6 @@
 // Node.js native modules.
 const path    = require('path');
 
-// External dependencies.
-const _       = require('lodash');
-
 // Custom modules.
 const Todo       = require('./todo');
 const TodoDriver = require('./todo-driver');

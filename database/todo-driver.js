@@ -39,6 +39,6 @@ class TodoDriver {
   write(data) {
     return this.json.write(data);
   }
-};
+}
 
 exports = module.exports = TodoDriver;

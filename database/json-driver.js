@@ -34,6 +34,6 @@ class JsonDriver {
       });
     });
   }
-};
+}
 
 module.exports = exports = JsonDriver;
