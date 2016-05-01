@@ -76,6 +76,10 @@ exports.findOne = (obj) => {
 };
 
 exports.findById = (id) => {
+  if (typeof id === 'string') {
+    id = parseInt(id);
+  }
+
   return new Promise((resolve, reject) => {
     driver.read()
     .then((data) => {
