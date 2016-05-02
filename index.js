@@ -51,7 +51,8 @@ program.command('new')
 
 program.command('mark [ID]')
 .description('if your to do job is done')
-.action((id) => {
+.option('-u, --unmark', 'to unmark your job')
+.action((id, options) => {
   if (!id) {
     console.log('Please type the ID.');
     process.exit(1);
@@ -64,11 +65,25 @@ program.command('mark [ID]')
       process.exit(1);
     }
 
-    todo.isComplete = true;
+    if (todo.isComplete === !options.unmark &&
+      !options.unmark === true) {
+      console.log('Your job is already marked!');
+      process.exit(1);
+    } else if (todo.isComplete === !options.unmark &&
+      !options.unmark === false) {
+      console.log('Your job is already unmarked!');
+      process.exit(1);
+    }
+
+    todo.isComplete = !options.unmark;
     return db.update(todo);
   })
   .then(() => {
-    console.log('OK. the job is marked.');
+    if (options.unmark) {
+      console.log('OK. the job is unmarked.');
+    } else {
+      console.log('OK. the job is marked.');
+    }
   })
   .catch((err) => {
     console.log(err);
