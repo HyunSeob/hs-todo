@@ -90,4 +90,20 @@ program.command('mark [ID]')
   });
 });
 
+program.command('remove [ID]')
+.description('remove a todo')
+.action((id) => {
+  if (!id) {
+    console.log('Please type the ID.');
+    process.exit(1);
+  }
+
+  db.destroy(id)
+  .then(() => {
+    console.log('OK. the job is removed.');
+  }).catch((err) => {
+    console.log(err);
+  });
+});
+
 program.parse(process.argv);

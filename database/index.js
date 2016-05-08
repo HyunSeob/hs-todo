@@ -116,7 +116,11 @@ exports.update = (obj) => {
 };
 
 exports.destroy = (id) => {
-  if (!id) throw new Error('\'destory\' requires id.');
+  if (!id) throw new Error('\'destroy\' requires id.');
+
+  if (typeof id === 'string') {
+    id = parseInt(id);
+  }
 
   return new Promise((resolve, reject) => {
     driver.read()
